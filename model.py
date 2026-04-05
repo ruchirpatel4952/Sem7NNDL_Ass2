@@ -427,9 +427,7 @@ def run_training():
           f"{accuracy_score(y_all, (ensemble_probs >= best_threshold).astype(int)):.4f})")
 
     #Evaluate ensemble on pre-test set 
-    print("\n" + "─" * 68)
     print("  Ensemble Evaluation on Pre-Test Set")
-    print("─" * 68)
     pre_probs_list = [predict_proba(m, X_pre_sc) for m in ensemble_models]
     pre_probs      = np.mean(pre_probs_list, axis=0)
     pre_preds      = (pre_probs >= best_threshold).astype(int)

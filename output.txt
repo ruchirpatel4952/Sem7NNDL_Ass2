@@ -1,0 +1,132 @@
+  GazeNet -- MR Gaze Classification  |  Training Pipeline
+  Training samples : 3462
+  Pre-test samples : 447
+  Combined total   : 3909
+  Class dist       : class-0=1452  class-1=2457
+  Input dimension  : 64
+
+  Stage 1 -- 5-Fold Stratified Cross-Validation (train only)
+  Fold 1/5 -> acc=0.7691  auc=0.8686  f1=0.8039
+  Fold 2/5 -> acc=0.7951  auc=0.8714  f1=0.8251
+  Fold 3/5 -> acc=0.7384  auc=0.8520  f1=0.7622
+  Fold 4/5 -> acc=0.8179  auc=0.9138  f1=0.8425
+  Fold 5/5 -> acc=0.7803  auc=0.8854  f1=0.8090
+
+  CV ACC  : 0.7802 +/- 0.0265
+  CV AUC  : 0.8782 +/- 0.0207
+  CV F1   : 0.8085 +/- 0.0268
+  Stage 2 -- Ensemble Training on Combined (Train + Pre-Test) Data
+
+  Ensemble member 1/5  (seed=42)
+  Ep    1 | tr_loss=0.7537  val_loss=0.4960 | val_acc=0.7517  val_auc=0.8434  val_f1=0.7933
+  Ep   20 | tr_loss=0.3845  val_loss=0.3513 | val_acc=0.8389  val_auc=0.9333  val_f1=0.8615
+  Ep   40 | tr_loss=0.3622  val_loss=0.3383 | val_acc=0.8121  val_auc=0.9437  val_f1=0.8306
+  Ep   60 | tr_loss=0.3345  val_loss=0.2913 | val_acc=0.8546  val_auc=0.9550  val_f1=0.8743
+  Ep   80 | tr_loss=0.2854  val_loss=0.2503 | val_acc=0.8658  val_auc=0.9673  val_f1=0.8837
+  Ep  100 | tr_loss=0.2571  val_loss=0.2272 | val_acc=0.8747  val_auc=0.9718  val_f1=0.8919
+  Ep  120 | tr_loss=0.2477  val_loss=0.2239 | val_acc=0.8792  val_auc=0.9730  val_f1=0.8958
+  Ep  140 | tr_loss=0.2805  val_loss=0.2440 | val_acc=0.8702  val_auc=0.9679  val_f1=0.8902
+  Ep  160 | tr_loss=0.2388  val_loss=0.2068 | val_acc=0.8926  val_auc=0.9717  val_f1=0.9108
+  Ep  180 | tr_loss=0.2079  val_loss=0.1754 | val_acc=0.9060  val_auc=0.9780  val_f1=0.9198
+  Ep  200 | tr_loss=0.1960  val_loss=0.1672 | val_acc=0.9038  val_auc=0.9809  val_f1=0.9181
+  Ep  220 | tr_loss=0.1818  val_loss=0.1515 | val_acc=0.9150  val_auc=0.9839  val_f1=0.9288
+  Ep  240 | tr_loss=0.1800  val_loss=0.1419 | val_acc=0.9105  val_auc=0.9850  val_f1=0.9237
+  Ep  260 | tr_loss=0.1629  val_loss=0.1460 | val_acc=0.9128  val_auc=0.9837  val_f1=0.9257
+  Ep  280 | tr_loss=0.1722  val_loss=0.1452 | val_acc=0.9083  val_auc=0.9835  val_f1=0.9216
+  -> Early stop at epoch 283  (best val_loss=0.1405)
+
+  Ensemble member 2/5  (seed=43)
+  Ep    1 | tr_loss=0.7976  val_loss=0.5465 | val_acc=0.7517  val_auc=0.8269  val_f1=0.7767
+  Ep   20 | tr_loss=0.3837  val_loss=0.3443 | val_acc=0.8166  val_auc=0.9352  val_f1=0.8386
+  Ep   40 | tr_loss=0.3467  val_loss=0.3234 | val_acc=0.8121  val_auc=0.9471  val_f1=0.8372
+  Ep   60 | tr_loss=0.3315  val_loss=0.2920 | val_acc=0.8434  val_auc=0.9617  val_f1=0.8617
+  Ep   80 | tr_loss=0.2706  val_loss=0.2456 | val_acc=0.8702  val_auc=0.9698  val_f1=0.8863
+  Ep  100 | tr_loss=0.2435  val_loss=0.2171 | val_acc=0.8725  val_auc=0.9735  val_f1=0.8897
+  Ep  120 | tr_loss=0.2461  val_loss=0.2142 | val_acc=0.8814  val_auc=0.9733  val_f1=0.8975
+  Ep  140 | tr_loss=0.2529  val_loss=0.2147 | val_acc=0.8770  val_auc=0.9769  val_f1=0.8928
+  Ep  160 | tr_loss=0.2246  val_loss=0.1948 | val_acc=0.8904  val_auc=0.9778  val_f1=0.9049
+  Ep  180 | tr_loss=0.2003  val_loss=0.1685 | val_acc=0.9016  val_auc=0.9805  val_f1=0.9157
+  Ep  200 | tr_loss=0.2083  val_loss=0.1624 | val_acc=0.9038  val_auc=0.9808  val_f1=0.9175
+  Ep  220 | tr_loss=0.1782  val_loss=0.1496 | val_acc=0.9038  val_auc=0.9828  val_f1=0.9199
+  Ep  240 | tr_loss=0.1665  val_loss=0.1424 | val_acc=0.9083  val_auc=0.9833  val_f1=0.9213
+  Ep  260 | tr_loss=0.1732  val_loss=0.1397 | val_acc=0.9083  val_auc=0.9840  val_f1=0.9216
+  Ep  280 | tr_loss=0.1705  val_loss=0.1379 | val_acc=0.9083  val_auc=0.9844  val_f1=0.9216
+  Ep  300 | tr_loss=0.1930  val_loss=0.1481 | val_acc=0.9128  val_auc=0.9848  val_f1=0.9292
+
+  Ensemble member 3/5  (seed=44)
+  Ep    1 | tr_loss=0.7616  val_loss=0.5064 | val_acc=0.7383  val_auc=0.8409  val_f1=0.7692
+  Ep   20 | tr_loss=0.3897  val_loss=0.3621 | val_acc=0.7830  val_auc=0.9313  val_f1=0.8008
+  Ep   40 | tr_loss=0.3465  val_loss=0.3350 | val_acc=0.8210  val_auc=0.9415  val_f1=0.8394
+  Ep   60 | tr_loss=0.3136  val_loss=0.2781 | val_acc=0.8523  val_auc=0.9594  val_f1=0.8706
+  Ep   80 | tr_loss=0.3012  val_loss=0.2529 | val_acc=0.8658  val_auc=0.9658  val_f1=0.8842
+  Ep  100 | tr_loss=0.2479  val_loss=0.2220 | val_acc=0.8792  val_auc=0.9725  val_f1=0.8989
+  Ep  120 | tr_loss=0.2636  val_loss=0.2078 | val_acc=0.8859  val_auc=0.9758  val_f1=0.9021
+  Ep  140 | tr_loss=0.2535  val_loss=0.2181 | val_acc=0.8881  val_auc=0.9721  val_f1=0.9064
+  Ep  160 | tr_loss=0.2242  val_loss=0.1805 | val_acc=0.9016  val_auc=0.9802  val_f1=0.9182
+  Ep  180 | tr_loss=0.2115  val_loss=0.1785 | val_acc=0.8993  val_auc=0.9778  val_f1=0.9136
+  Ep  200 | tr_loss=0.1936  val_loss=0.1604 | val_acc=0.9016  val_auc=0.9819  val_f1=0.9167
+  Ep  220 | tr_loss=0.1861  val_loss=0.1565 | val_acc=0.9060  val_auc=0.9807  val_f1=0.9195
+  Ep  240 | tr_loss=0.1758  val_loss=0.1453 | val_acc=0.9105  val_auc=0.9837  val_f1=0.9237
+  Ep  260 | tr_loss=0.1728  val_loss=0.1452 | val_acc=0.9105  val_auc=0.9825  val_f1=0.9237
+  Ep  280 | tr_loss=0.1657  val_loss=0.1444 | val_acc=0.9105  val_auc=0.9823  val_f1=0.9237
+  -> Early stop at epoch 288  (best val_loss=0.1409)
+
+  Ensemble member 4/5  (seed=45)
+  Ep    1 | tr_loss=0.7708  val_loss=0.5486 | val_acc=0.7562  val_auc=0.8278  val_f1=0.7892
+  Ep   20 | tr_loss=0.3822  val_loss=0.3616 | val_acc=0.8076  val_auc=0.9246  val_f1=0.8327
+  Ep   40 | tr_loss=0.3656  val_loss=0.3339 | val_acc=0.8188  val_auc=0.9409  val_f1=0.8370
+  Ep   60 | tr_loss=0.3393  val_loss=0.3098 | val_acc=0.8345  val_auc=0.9484  val_f1=0.8549
+  Ep   80 | tr_loss=0.2662  val_loss=0.2458 | val_acc=0.8523  val_auc=0.9669  val_f1=0.8696
+  Ep  100 | tr_loss=0.2650  val_loss=0.2283 | val_acc=0.8792  val_auc=0.9700  val_f1=0.8969
+  Ep  120 | tr_loss=0.2537  val_loss=0.2231 | val_acc=0.8747  val_auc=0.9720  val_f1=0.8915
+  Ep  140 | tr_loss=0.2545  val_loss=0.2193 | val_acc=0.8747  val_auc=0.9759  val_f1=0.8915
+  Ep  160 | tr_loss=0.2361  val_loss=0.1903 | val_acc=0.8881  val_auc=0.9772  val_f1=0.9035
+  Ep  180 | tr_loss=0.2022  val_loss=0.1708 | val_acc=0.9060  val_auc=0.9814  val_f1=0.9225
+  Ep  200 | tr_loss=0.1861  val_loss=0.1594 | val_acc=0.9060  val_auc=0.9828  val_f1=0.9198
+  Ep  220 | tr_loss=0.1719  val_loss=0.1450 | val_acc=0.9128  val_auc=0.9838  val_f1=0.9257
+  Ep  240 | tr_loss=0.1675  val_loss=0.1423 | val_acc=0.9083  val_auc=0.9843  val_f1=0.9216
+  Ep  260 | tr_loss=0.1639  val_loss=0.1376 | val_acc=0.9083  val_auc=0.9832  val_f1=0.9219
+  Ep  280 | tr_loss=0.1615  val_loss=0.1400 | val_acc=0.9083  val_auc=0.9837  val_f1=0.9216
+  Ep  300 | tr_loss=0.1924  val_loss=0.1523 | val_acc=0.9038  val_auc=0.9839  val_f1=0.9171
+
+  Ensemble member 5/5  (seed=46)
+  Ep    1 | tr_loss=0.7635  val_loss=0.5031 | val_acc=0.7539  val_auc=0.8424  val_f1=0.7901
+  Ep   20 | tr_loss=0.3835  val_loss=0.3786 | val_acc=0.7987  val_auc=0.9184  val_f1=0.8256
+  Ep   40 | tr_loss=0.3532  val_loss=0.3409 | val_acc=0.8300  val_auc=0.9386  val_f1=0.8486
+  Ep   60 | tr_loss=0.3181  val_loss=0.2956 | val_acc=0.8345  val_auc=0.9464  val_f1=0.8625
+  Ep   80 | tr_loss=0.2841  val_loss=0.2563 | val_acc=0.8568  val_auc=0.9595  val_f1=0.8779
+  Ep  100 | tr_loss=0.2605  val_loss=0.2252 | val_acc=0.8725  val_auc=0.9699  val_f1=0.8893
+  Ep  120 | tr_loss=0.2667  val_loss=0.2165 | val_acc=0.8658  val_auc=0.9719  val_f1=0.8833
+  Ep  140 | tr_loss=0.2447  val_loss=0.2044 | val_acc=0.8926  val_auc=0.9746  val_f1=0.9104
+  Ep  160 | tr_loss=0.2367  val_loss=0.1868 | val_acc=0.8926  val_auc=0.9785  val_f1=0.9077
+  Ep  180 | tr_loss=0.2002  val_loss=0.1784 | val_acc=0.9038  val_auc=0.9788  val_f1=0.9178
+  Ep  200 | tr_loss=0.1930  val_loss=0.1593 | val_acc=0.9060  val_auc=0.9813  val_f1=0.9202
+  Ep  220 | tr_loss=0.1748  val_loss=0.1540 | val_acc=0.9083  val_auc=0.9819  val_f1=0.9259
+  Ep  240 | tr_loss=0.1662  val_loss=0.1470 | val_acc=0.9083  val_auc=0.9833  val_f1=0.9216
+  -> Early stop at epoch 245  (best val_loss=0.1418)
+
+  Optimising decision threshold on combined training data ...
+  Threshold: 0.2601  (train acc: 0.9263)
+
+────────────────────────────────────────────────────────────────────
+  Ensemble Evaluation on Pre-Test Set
+────────────────────────────────────────────────────────────────────
+  Accuracy : 0.9217
+  ROC-AUC  : 0.9850
+  F1 Score : 0.9412
+
+                precision    recall  f1-score   support
+
+Not Gazing (0)       0.99      0.80      0.88       166
+    Gazing (1)       0.89      1.00      0.94       281
+
+      accuracy                           0.92       447
+     macro avg       0.94      0.90      0.91       447
+  weighted avg       0.93      0.92      0.92       447
+
+  Confusion Matrix:
+  [[132  34]
+ [  1 280]]
+
+  Saving checkpoint -> gazenet_weights.pth
+  Saved (2339 KB)
