@@ -50,7 +50,6 @@ SEED         = 42
 
 
 def set_seed(seed: int = SEED) -> None:
-    """Fix all random-number generators for reproducible results."""
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -178,10 +177,6 @@ class GazeNet(nn.Module):
 #Training util.
 
 class EarlyStopping:
-    """
-    Stop training when validation loss stagnates for `patience` consecutive epochs.
-    Saves a CPU copy of the best model weights and restores them on request.
-    """
 
     def __init__(self, patience=PATIENCE, min_delta=1e-5):
         self.patience   = patience
@@ -204,7 +199,6 @@ class EarlyStopping:
         return self.counter >= self.patience
 
     def restore(self, model):
-        """Load the best checkpoint back into the model."""
         if self.best_state is not None:
             model.load_state_dict(self.best_state)
 
@@ -352,10 +346,7 @@ def find_best_threshold(probs, labels):
 #Main training pipeline; runs if training data is present, otherwise runs inference if test_input.csv is present.
 
 def run_training():
-    print("=" * 68)
     print("  GazeNet -- MR Gaze Classification  |  Training Pipeline")
-    print("=" * 68)
-    print(f"  Device: {DEVICE}\n")
 
     #Load data 
     X_train, y_train = load_labelled_csv(TRAIN_CSV)
@@ -380,9 +371,7 @@ def run_training():
     X_pre_sc   = scaler.transform(X_pre).astype(np.float32)
 
     #5-Fold Stratified CV (training data) 
-    print("─" * 68)
     print("  Stage 1 -- 5-Fold Stratified Cross-Validation (train only)")
-    print("─" * 68)
     skf      = StratifiedKFold(n_splits=N_FOLDS, shuffle=True, random_state=SEED)
     cv_stats = {"acc": [], "auc": [], "f1": []}
 
@@ -411,9 +400,7 @@ def run_training():
         print(f"  CV {metric.upper():5s}: {np.mean(vals):.4f} +/- {np.std(vals):.4f}")
 
     #Ensemble training on combined data 
-    print("\n" + "─" * 68)
     print("  Stage 2 -- Ensemble Training on Combined (Train + Pre-Test) Data")
-    print("─" * 68)
 
     ensemble_models = []
     all_loader  = make_loader(X_all_sc, y_all, BATCH_SIZE, oversample=True)
@@ -482,18 +469,6 @@ def run_training():
 def run_inference(test_input_path=TEST_INPUT_CSV,
                   test_output_path=TEST_OUTPUT_CSV,
                   weights_path=WEIGHTS_PATH):
-    """
-    Inference entry point used by the marker.
-
-    1. Load ensemble weights + scaler params + threshold from checkpoint.
-    2. Read and normalise test_input.csv.
-    3. Soft-vote across ensemble members.
-    4. Apply tuned threshold.
-    5. Write predictions to test_output.csv with column 'Y'.
-
-    No sklearn or external preprocessing dependency at inference time:
-    the scaler mean/std are stored directly in the .pth checkpoint.
-    """
     print(f"Loading checkpoint: {weights_path}")
     ckpt = torch.load(weights_path, map_location=DEVICE)
 
@@ -546,7 +521,5 @@ if __name__ == "__main__":
 
         # Run inference immediately if test_input.csv is also present
         if os.path.exists(TEST_INPUT_CSV):
-            print("\n" + "=" * 68)
             print("  Running inference on test_input.csv")
-            print("=" * 68)
             run_inference()
